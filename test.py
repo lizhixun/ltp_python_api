@@ -4,8 +4,30 @@
 
 from ltp_interface import *
 
-f = open(r'test.txt')
+logfilename = 'log.txt'
 
+def test_SplitSentence():
+    logfile = open(logfilename, 'a')
+    try:
+        logfile.write('\n\n--------------\ntest SplitSentence\n')
+        CreateDOMFromTxt("test.txt")
+        logfile.write('\n\nbefore split sentence, para info')
+        coutNum = CountParagraphInDocument()
+        for i in range(coutNum):
+            logfile.write('\npara ')
+            logfile.write(str(i))
+            para = GetParagraph(i)
+            if para != None:
+                logfile.write('\n')
+                logfile.write(str(para))
+
+        SplitSentence()
+        SaveDOM(r'test_splitsentence.xml')
+    finally:
+        logfile.close()
+
+if __name__ == '__main__':
+    test_SplitSentence()
 #CreateDOMFromString("那里车位很少，停车很麻烦，有时候为了安全还要停在旁边花园里");
 
 #CreateDOMFromTxt("test.txt");
