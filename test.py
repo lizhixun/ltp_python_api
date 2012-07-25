@@ -4,11 +4,90 @@
 
 from ltp_interface import *
 
+logfilename = 'log.txt'
 
+def test_SplitSentence():
+    logfile = open(logfilename, 'a')
+    try:
+        logfile.write('\n\n--------------\ntest SplitSentence\n')
+        CreateDOMFromTxt("test.txt")
+        logfile.write('\n\nbefore split sentence, para info')
+        coutNum = CountParagraphInDocument()
+        for i in range(coutNum):
+            logfile.write('\npara ')
+            logfile.write(str(i))
+            para = GetParagraph(i)
+            if para != None:
+                logfile.write('\n')
+                logfile.write(str(para))
+
+        SplitSentence()
+        SaveDOM(r'test_splitsentence.xml')
+    finally:
+        logfile.close()
+
+def test_CRFWordSeg():
+    logfile = open(logfilename, 'a')
+    try:
+        logfile.write("\n\n------------\ntest CRFWordSeg\n")
+        CreateDOMFromTxt("test.txt")
+        SplitSentence()
+        CRFWordSeg()
+        SaveDOM('test_crfwordseg.xml')
+    finally:
+        logfile.close()
+
+def test_PosTag():
+    logfile = open(logfilename, 'a')
+    try:
+        logfile.write("\n\n-------------\ntest PosTag\n")
+        CreateDOMFromTxt('test.txt')
+        SplitSentence()
+        PosTag()
+        SaveDOM('test_postag.xml')
+    finally:
+        logfile.close()
+
+def test_NER():
+    logfile = open(logfilename, 'a')
+    try:
+        logfile.write("\n\n--------------\ntest NER\n")
+        CreateDOMFromTxt("test.txt")
+        SplitSentence()
+        NER()
+        SaveDOM("test_ner.xml")
+    finally:
+        logfile.close()
+
+def test_Parser():
+    logfile = open(logfilename, 'a')
+    try:
+        logfile.write("\n\n----------------\ntest Parser\n")
+        CreateDOMFromTxt("test.txt")
+        SplitSentence()
+        GParser()
+        SaveDOM("test_parser.xml")
+    finally:
+        logfile.close()
+
+# 这个API有问题 没法正常运行
+def test_SRL():
+    logfile = open(logfilename, 'a')
+    try:
+        logfile.write("\n\n--------------------\ntest SRL\n")
+        CreateDOMFromTxt("test.txt")
+        SplitSentence()
+        SRL()
+        SaveDOM("test_srl.xml")
+    finally:
+        logfile.close()
+
+if __name__ == '__main__':
+    print('lizhixun')
 #CreateDOMFromString("那里车位很少，停车很麻烦，有时候为了安全还要停在旁边花园里");
 
-CreateDOMFromTxt("test.txt");
-SplitSentence()
+#CreateDOMFromTxt("test.txt");
+#SplitSentence()
 #IRLAS()
 #CRFWordSeg()
 #PosTag()
@@ -17,7 +96,7 @@ SplitSentence()
 #Parser()
 #GParser()
 #SRL()
-SaveDOM('test.xml')
+#SaveDOM('test.xml')
 
 '''
 print GetWordsFromSentence(0)
